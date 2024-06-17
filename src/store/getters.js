@@ -1,0 +1,16 @@
+export default{
+    sidebar:state=>state.app.sidebar,
+    userInfo:state=>state.user.userInfo,
+    qyInfo:state=>state.user.qyInfo,
+    tokenInfo:state=>state.user.tokenInfo,
+    aesKeyInfo:state=>state.user.aesKeyInfo,
+    headImg:state=>state.head.headImg,
+    imgList:state=>state.imgList.imgList,
+    mlList:state=>state.mlList.mlList,
+    wjscFlag:state=>state.wjsc.wjscFlag,
+    sbNode:state=>state.sbNode.sbNode,
+    clFlag:state=>state.clFlag.clFlag,
+    setUndoTotal:state=>state.head.setUndoTotal,
+    plusUndoTotal:state=>state.head.plusUndoTotal,
+    setDoneClueId:state=>state.head.setDoneClueId,
+}

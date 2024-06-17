@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .box{
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            width: 646px;
+            height: 316px;
+            overflow: hidden;
+            padding: 0 20px;
+            background-color: #fff;
+        }
+        header{
+            width: 100%;
+            height: 38px;
+            line-height: 38px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #0861c4;
+        }
+        header img{
+            display: block;
+            width: 13px;
+            height: 13px;
+            margin-top: 18px;
+        }
+        header span{
+            font-size: 18px;
+            color: #0861c4;
+        }
+        main{
+            width: 100%;
+        }
+        main .wenshu_item{
+            height: 46px;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .wenshu_item:hover p{
+            border-bottom: 1px solid #0861c4;
+        }
+        main .wenshu_item img{
+            display: block;
+            width: 12px;
+            height: 12px;
+            margin-top: 18px;
+        }
+        main .wenshu_item p{
+            width: 97%;
+            line-height: 46px;
+            border-bottom: 1px dashed #EDEDED;
+            font-size: 14px;
+            font-weight: 400;
+            display: flex;
+            justify-content: space-between;
+        }
+        main .wenshu_item p span{
+            display: block;
+        }
+        main .wenshu_item p span:nth-of-type(1){
+            width: 450px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #333333;
+        }
+        main .wenshu_item p span:nth-of-type(2){
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <header>
+            <span>法律文书公开</span>
+            <img src="./imgs/xiayiye.png" alt="">
+        </header>
+        <main>
+            <div class="wenshu_item">
+                <img src="./imgs/lingicng.png" alt="">
+                <p>
+                    <span>【深圳市院】发的说法发</span>
+                    <span>2021-12-25</span>
+                </p>
+            </div>
+            <div class="wenshu_item">
+                <img src="./imgs/lingicng.png" alt="">
+                <p>
+                    <span>【深圳市院】发的说法发</span>
+                    <span>2021-12-25</span>
+                </p>
+            </div>
+            <div class="wenshu_item">
+                <img src="./imgs/lingicng.png" alt="">
+                <p>
+                    <span>【深圳市院】发的说法发</span>
+                    <span>2021-12-25</span>
+                </p>
+            </div>
+            <div class="wenshu_item">
+                <img src="./imgs/lingicng.png" alt="">
+                <p>
+                    <span>【深圳市院】发的说法发</span>
+                    <span>2021-12-25</span>
+                </p>
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    let items=document.getElementsByTagName("main")[0].getElementsByClassName("wenshu_item")
+    // console.log(items);
+    for(let i=0;i<items.length;i++){
+        items[i].onclick=function(){
+            window.open("www.baidu.com")
+        }
+    }
+</script>
+</html>

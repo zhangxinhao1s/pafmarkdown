@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>重命名</title>
+    <g id="数字卷宗" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="卷宗制作列表" transform="translate(-1645, -428)" fill="#096DD9" fill-rule="nonzero">
+            <g id="编组-10" transform="translate(30, 408)">
+                <g id="编组-3" transform="translate(1535, 20)">
+                    <g id="重命名" transform="translate(80, 0)">
+                        <rect id="矩形" opacity="0" x="0" y="0" width="20" height="20"></rect>
+                        <polygon id="路径" points="18.5714258 18.5714258 1.42857422 18.5714258 1.42857422 1.42857422 8.71425781 1.42857422 8.71425781 2.85714844 2.85714844 2.85714844 2.85714844 17.1428516 17.1428516 17.1428516 17.1428516 10.7142773 18.5714258 10.7142773"></polygon>
+                        <polygon id="路径" points="17.5714258 3.14285156 16.5714258 2.14285156 5.71427734 13 6.71427734 14 17.5714258 3.14285156"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

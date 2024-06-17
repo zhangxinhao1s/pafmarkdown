@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box{
+            width: 389px;
+            height: 238px;
+            background-color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        #swiper{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        #wrap{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: all .5s;
+        }
+        #wrap .swiper_item{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        #wrap .swiper_item img{
+            display: block;
+            width: 389px;
+            height: 238px;
+        }
+        #wrap .swiper_item p{
+            width: 100%;
+            line-height: 30px;
+            background-color: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            font-size: 16px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #FFFFFF;
+        }
+        #jiantou{
+            display: none;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+           
+        }
+        #jiantou #prev{
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            color: #fff;
+            line-height: 40px;
+            text-indent: 7px;
+            float: left;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        #jiantou #next{
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            color: #fff;
+            line-height: 40px;
+            text-indent: 15px;
+            float: right;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        #yuandian{
+            height: 30px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            display: flex;
+        }
+        #yuandian p{
+            width: 8px;
+            height: 8px;
+            background-color: rgba(202, 199, 199,0.8);
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        #yuandian p:last-child{
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="swiper">
+            <div id="wrap">
+                <div class="swiper_item">
+                    <img class="swiper_img" src="./imgs/xinwen.png" alt="">
+                    <p>张军：夯实基层组织 做好基础工作 提升基本能力</p>
+                </div>
+                <div class="swiper_item">
+                    <img class="swiper_img" src="./imgs/新闻图.png" alt="">
+                    <p>4584446</p>
+                </div>
+                <div class="swiper_item">
+                    <img class="swiper_img" src="./imgs/xinwen.png" alt="">
+                    <p>飞洒发的</p>
+                </div>
+            </div>
+            <div id="jiantou">
+                <div id="prev">
+                    〈
+                </div>
+                <div id="next">
+                    〉
+                </div>
+            </div>
+            <div id="yuandian">
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script>
+    let wrap=document.getElementById("wrap");
+    let item_new=wrap.children[0].cloneNode(true);//克隆第一个元素 包含子节点
+    wrap.appendChild(item_new);//尾部插入这个新的节点
+    let item=document.getElementsByClassName("swiper_item");
+    // console.log(wrap);
+
+    // 轮播
+    let next=document.getElementById("next");
+    let prev=document.getElementById("prev");
+    let flag=true
+    let timer;
+    let x=0;//计数
+
+    // 动态创建轮播圆点
+    for(let i=0;i<item.length-1;i++){
+        let dian=document.createElement("p");//创建hp节点
+        document.getElementById("yuandian").appendChild(dian);
+    }
+    let dians=document.getElementById("yuandian").children
+    dians[0].style.backgroundColor="rgb(22, 34, 73)";
+    for(let i=0;i<item.length-1;i++){
+        let index=i
+        dians[i].onclick=function(){
+            dians[x].style.backgroundColor="rgba(202, 199, 199,0.8)";
+            x=index
+            dians[x].style.backgroundColor="rgb(22, 34, 73)";
+            wrap.style.marginLeft=index*-650+'px';
+        }
+    }
+
+
+    // 下一张
+    next.onclick=function(){
+       if(flag){
+            clearTimeout(timer)
+            flag=false
+            timer=setTimeout(function(){
+                flag=true
+                dians[x].style.backgroundColor="rgba(202, 199, 199,0.8)";
+                x++;
+                if(x>2){
+                    x=0
+                }
+                wrap.style.marginLeft=-x*650+'px';
+                dians[x].style.backgroundColor="rgb(22, 34, 73)";
+            },500)
+       }
+    }
+    function f(){
+        dians[x].style.backgroundColor="rgba(202, 199, 199,0.8)";
+        x++
+        if(x>2){
+            x=0
+        }
+        wrap.style.marginLeft=-x*650+'px';
+        dians[x].style.backgroundColor="rgb(22, 34, 73)";
+    }
+    let timer2;
+    timer2=setInterval(f,2000);
+
+    // 替身
+    wrap.addEventListener("transitionend",function(){
+        if(x==item.length-1){//到达替身元素
+            wrap.style.transition="none";
+            wrap.style.marginLeft=0;
+            x=0;
+            setTimeout(function(){
+                wrap.style.transition="all .5s";
+            },16.7)
+        }
+    })
+    // 上一张
+    prev.onclick=function(){
+        if(flag){
+            clearTimeout(timer)
+            flag=false
+            setTimeout(function(){
+                flag=true
+                dians[x].style.backgroundColor="rgba(202, 199, 199,0.8)";
+                x--;
+                if(x<0){
+                    // 瞬间到达替身位置
+                    wrap.style.transition="none";
+                    wrap.style.marginLeft=(item.length-1)*-650+'px';
+                    // 下一帧往第三张过渡
+                    setTimeout(function(){
+                        wrap.style.transition="all .5s";
+                        wrap.style.marginLeft=(item.length-2)*-650+'px';
+                        x=item.length-2;
+                        dians[x].style.backgroundColor="rgb(22, 34, 73)";
+                    },16.7)
+                }else{
+                    wrap.style.marginLeft=-x*650+"px";
+                    dians[x].style.backgroundColor="rgb(22, 34, 73)";
+                }
+            },500)
+        }
+        clearTimeout(timer)
+    }
+    // 箭头显示与隐藏
+    let swiper=document.getElementById("swiper");
+    let jt=document.getElementById("jiantou");
+    swiper.onmouseover=function(){
+        jt.style.display="block";
+        clearInterval(timer2)
+    }
+    swiper.onmouseout=function(){
+        jt.style.display="none";
+        timer2=setInterval(f,2000);
+    }
+</script>
+</html>
