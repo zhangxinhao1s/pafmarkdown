@@ -100,7 +100,7 @@ export default {
       this.editor = new Editor({
         el: document.querySelector('#editor'),
         previewStyle: 'vertical',
-        plugins: [bgcolor,colorSyntax,fontSize,del,fontfamily,indentLeftSyntaxPlugin,indentRightSyntaxPlugin],
+        plugins: [bgcolor,colorSyntax,fontSize,del,fontfamily,],
         initialValue: markdownWithIcon,
         initialEditType: 'wysiwyg',
         hideModeSwitch: true,
@@ -112,7 +112,6 @@ export default {
           // ['hr', 'quote'],
           ['ul', 'ol', 'task', 'indent', 'outdent'],
           ['table', 'image', 'link'],
-          ['code', 'codeblock']
         ]
       });
       this.$data.editor = this.editor;
@@ -196,7 +195,6 @@ export default {
       _this.generateOutline();
       _this.editor.on('change', () => {
         _this.generateOutline();
-        console.log(this.editor.getMarkdown());
       });
     },
     
@@ -236,7 +234,7 @@ export default {
   background-color: #fff;
   height: 80%;
   width: 300px;
-  top: 80px;
+  top: 65px;
   border: 1px solid #e8e8e8;
   margin: auto;
   padding: 16px;
@@ -255,7 +253,7 @@ export default {
     left: 0;
     margin: auto;
     cursor: pointer;
-    width: 20px;
+    width: 16px;
     height: 60px;
     background: #83b5eb;
     border-radius: 0px 10px 10px 0px;

@@ -8,3 +8,6 @@ const biz = '/base'
 export const cataloguefile = data => post(`${SERVE}/open/get/szjzMlwj`, data);
 // 获取数字卷宗目录结构
 export const catalogueTree = data => post(`${SERVE}/open/get/szjzTree`, data);
+// 获取数字卷宗目录文件的PDF
+export const cataloguePdf = data => post(`${SERVE}/open/get/jzmlwjPdf`, data);
+

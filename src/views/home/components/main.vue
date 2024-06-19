@@ -243,7 +243,7 @@ export default {
 <style lang="less" scoped>
 .content {
   width: 100%;
-  height: 100%;
+  height:calc(100% - 50px);
   display: flex;
   .left, .right {
     width: 50%;
@@ -319,8 +319,11 @@ export default {
     width: 1px;
     border-left: 1px solid rgb(166, 166, 253);
   }
-  /deep/.el-tabs,/deep/.el-tabs__content,/deep/.el-tab-pane{
+  /deep/.el-tabs,/deep/.el-tab-pane{
   height: 100%;
+ }
+ /deep/.el-tabs__content{
+  height:calc(100% - 25px);
  }
  /deep/.el-tabs__header{
   margin: 0;

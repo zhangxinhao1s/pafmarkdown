@@ -20,7 +20,7 @@ var _moment = _interopRequireDefault(require("moment"));
 
 require("./assets/iconfont/iconfont.css");
 
-require("./components");
+// require("./components");
 
 require("./styles/base.less");
 

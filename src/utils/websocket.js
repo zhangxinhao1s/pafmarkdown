@@ -1,7 +1,7 @@
 export default class SocketService {
     constructor(againConnect = true, url) {
     //   this.url = url;
-    this.url=`ws://192.168.0.11:8080/szjz/websocket/4403000001`
+    this.url=`ws://192.168.0.9:8080/szjz/websocket/4403000001`
       this.againConnect = againConnect;
     }
     instance = null;  //页面中使用的SocketService实例

@@ -23,9 +23,9 @@
             <p class="tip">证据分析</p>
             <p class="tip">笔录比对</p>
           </div>
-          <span slot="reference">{{item.name}} <i class="el-icon-arrow-down"></i> </span>
+          <span slot="reference"><img :src="item.img" alt="" />{{item.name}} <i class="el-icon-arrow-down"></i> </span>
         </el-popover>
-          <span v-else>{{ item.name }}</span>
+          <span v-else><img :src="item.img" alt="" />{{ item.name }}</span>
         </li>
       </ul>
     </div>
@@ -48,31 +48,38 @@ export default {
           name: "阅卷笔录",
           value:'markingRecord',
           type: "1",
+          img:require('@/assets/svg/markingPapers.svg')
         },
        
         {
           name: "案件审查",
           value: 'caseReview',
           type: "1",
+          img:require('@/assets/svg/examine.svg')
         },
         {
           name: "智能问答",
           value: 'intelligentQuestion',
           type: "1",
+          img:require('@/assets/svg/qaqa.svg')
         },
         {
           name: "案卡回填",
           value: 'caseCard',
           type: "1",
+          img:require('@/assets/svg/caseCard.svg')
         },
         {
           name: "文书制作",
           value: 'document',
           type: "1",
+          img:require('@/assets/svg/documen.svg')
+
         },
         {
           name: "工具箱",
           type: "2",
+          img:require('@/assets/svg/toolbox.svg')
         }
       ],
      
@@ -145,6 +152,16 @@ export default {
       font-weight: 400;
       margin-left: 24px;
       cursor: pointer;
+      width: 67px;
+      span{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    img{
+      width: 16px;
+      height: 20px;
     }
   }
   .btn {

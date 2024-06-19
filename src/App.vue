@@ -1,30 +1,15 @@
 <template>
   <div style="height: 100%">
     <router-view v-if="refShow" />
-    <SP-dialog
-      v-bind="$attrs"
-      v-on="$listeners"
-      :title="null"
-      class="listDialog"
-      :visible.sync="visible"
-      :show-close="false"
-      width="550px"
-      :before-close="close"
-      @cancel="close"
-      @confirm="close"
-      ><div class="dialogText">此功能尚未开放，敬请期待！</div></SP-dialog
-    >
+
   </div>
 </template>
 <script>
 import storage from "@/utils/storage/storage";
-import SPDialog from "./components/SPDialog/SPDialog.vue";
 export default {
-  components: { SPDialog },
   provide() {
     return {
       appReload: this.appReload,
-      showSpDialog: this.showSpDialog,
     };
   },
   data() {
@@ -39,9 +24,6 @@ export default {
       this.$nextTick(() => {
         this.refShow = true;
       });
-    },
-    showSpDialog() {
-      this.visible = true;
     },
     close() {
       this.visible = false;

@@ -8,7 +8,7 @@ import axios from 'axios'
 import qs from 'qs'
 import moment from 'moment'
 import './assets/iconfont/iconfont.css'
-import './components' //自定义组件全局注册
+// import './components' //自定义组件全局注册
 import './styles/base.less'
 import Auth from "./directives/auth"
 import VueContextMenu from "vue-contextmenu"

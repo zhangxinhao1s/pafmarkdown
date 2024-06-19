@@ -111,7 +111,7 @@ module.exports = {
         // ]);
         config.resolve.alias
             .set('assets', resolve('src/assets'))
-            .set('components', resolve('src/components'))
+            // .set('components', resolve('src/components'))
             .set('styles', resolve('src/styles'))
             .set('utils', resolve('src/utils'))
             .set('anyChat', resolve('public/anyChat/logicfunc.js'));
