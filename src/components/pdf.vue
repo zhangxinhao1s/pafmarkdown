@@ -8,25 +8,42 @@
       <span @click="takeScreenshot" > <img src="./../assets/svg/screenshot.svg" alt="截图"></span>
       <span @click="extractTextFromSelection" v-if="selectedArea">提取文本</span>
     </div>
-    <div id="canvasContainer" ref="canvasContainer" :class="{'cav': leftop, 'avc': !leftop}" @scroll="handleScroll">
-      <canvas ref="pdfCanvas"></canvas>
-      <div id="text-overlay">
-        <div v-for="paragraph in jsonObj.paragraph" :key="paragraph.word">
-          <span v-for="char in paragraph.char_location"  
-          @mouseup="handleMouseUp"
-                :style="{ 
-                  position: 'absolute',
-                  left: (char.x * scale) + 'px',
-                  top: (char.y * scale) + 'px',
-                  fontSize: (char.h * scale)-1 + 'px',
-                  fontFamily:'宋体',
-                  color: 'transparent' 
-                }">
-            {{ char.word }}
-          </span>
+    <div class="box1" id="box1" @scroll="scroller">
+      <div class="infinite-list-item" 
+        v-for="(item,index) in count"
+        :key="index" 
+        id="demotest12">
+        <div id="canvasContainer" ref="canvasContainer" :class="{'cav': leftop, 'avc': !leftop}" @scroll="handleScroll">
+          <canvas ref="pdfCanvas" :id="item.cancasId"></canvas>
+          <div id="text-overlay">
+            <div v-for="paragraph in jsonObj.paragraph" :key="paragraph.word">
+              <span v-for="char in paragraph.char_location"  
+              @mouseup="handleMouseUp"
+                    :style="{ 
+                      position: 'absolute',
+                      left: (char.x * scale) + 'px',
+                      top: (char.y * scale) + 'px',
+                      fontSize: (char.h * scale)-1 + 'px',
+                      fontFamily:'宋体',
+                      color: 'transparent' 
+                    }">
+                {{ char.word }}
+              </span>
+            </div>
+          </div>
+          <div class="insert" v-if="insert" :style="{left: (insert.x * scale) + 'px', top: (insert.y * scale) + 'px'}">
+            <div class="transcript" @click="transcript"><img src="./../assets/icons/transcript.png" alt=""> 插入笔录</div>
+            <span class="verticalLine"></span>
+            <div class="bookmark" @click="bookmark"><img src="./../assets/icons/bookmark.png" alt="">插入书签</div>
+          </div>
+          <div class="bookmark-list" v-for="(item,index) in bookmarkList" :key="index" :style="{left: (item.x * scale) + 'px', top: (item.y * scale) + 'px'}">
+            <img src="./../assets/icons/bookmark.png" alt="">
+          </div>
+      
         </div>
       </div>
-    <el-dialog :close-on-click-modal=false title="截图" :visible.sync="dialogTableVisible">
+    </div>
+  <el-dialog :close-on-click-modal=false title="截图" :visible.sync="dialogTableVisible">
       <div class="title">图片预览:</div>
       <div class="screenshot-container">
           <img :src="screenshot" alt="Screenshot" />
@@ -69,7 +86,6 @@
         <el-button type="primary" @click="addchild = false">在笔录末尾插入</el-button>
       </span>
     </el-dialog>
-  </div>
   <div
       v-if="selecting"
       class="selection-overlay"
@@ -104,16 +120,25 @@ export default {
   },
   data() {
     return {
+      index:0,
+      dataArr:[],
+      suoyin:0,
+      yeArr:[],
+      PdfHeight:1200,
       leftop: false,
       textFontSize: 18, // 初始文本字体大小
       scale: 0.4, // 初始缩放比例
       selecting: false,
+      insert:null,
+   
       pdfDocument:null,
       selectionStart: { x: 0, y: 0 },
       selectionEnd: { x: 0, y: 0 },
       selectedArea: null,
       dialogTableVisible: false,
       type:'',
+      bookmarkList:[],//书签列表
+      count:[],
       screenshot: null, // 用来保存截图的 Base64 数据
       ruleForm:{
         abstract: '',
@@ -121,7 +146,9 @@ export default {
         summary:'',
         prompt:''
       },
-       hoveredRowIndex: null,
+      bookmarkx:'',
+      bookmarky:'',
+      hoveredRowIndex: null,
     };
   },
   watch: {
@@ -166,7 +193,6 @@ export default {
         const page = await pdf.getPage(pageNumber);
         const viewport = page.getViewport({ scale: this.scale });
         let wh = document.getElementById('canvasContainer')
-        console.log(viewport.width, viewport.height,'wh',wh,wh.offsetWidth,wh.offsetHeight);
         const canvas = this.$refs.pdfCanvas;
         const context = canvas.getContext("2d");
 
@@ -275,20 +301,10 @@ export default {
       this.selectedArea = null;
       this.type='takeScreenshot';
     },
-    boxSelect() {
+    async boxSelect() {
       // 检查是否存在 class 为 selection-boxd 的元素
-        let selection = document.getElementsByClassName('selection-boxd');
-
-        if (selection.length > 0) {
-            // 将 HTMLCollection 转换为数组
-            selection = Array.from(selection);
-
-            // 遍历数组并移除每个元素
-            selection.forEach(function(element) {
-                element.parentNode.removeChild(element);
-            });
-        }
-      this.findAndMaskText(this.pdfDocument, this.$refs.pdfCanvas, window.getSelection().toString());
+      await this.clearSelection();
+      await this.findAndMaskText(this.pdfDocument, this.$refs.pdfCanvas, window.getSelection().toString());
       this.type='boxSelect';
     },
     async findAndMaskText(pdf, canvas, searchText) {
@@ -302,7 +318,18 @@ export default {
       let result = [];
       let array = foundObject.char_location
       // 遍历数组进行匹配
-      console.log(array,'数组');
+          // 提取 transform 数组的第 4 和第 5 个元素
+      let bookmarkx = [];
+      let bookmarky = [];
+      let bookmarkw = [];
+      foundObject.char_location.forEach(item => {
+        bookmarkx.push(item.x);
+        bookmarky.push(item.y);
+        bookmarkw.push(item.w);
+      });
+      this.bookmarkx = Math.max(...bookmarkx)+Math.max(...bookmarkw)+5;
+      this.bookmarky = (Math.max(...bookmarky)+Math.min(...bookmarky))/2;
+      
       for (let i = 0; i <= array.length - targetArray.length; i++) {
           // 判断数组中从当前位置开始的连续字符是否与目标字符串匹配
           let match = true;
@@ -348,10 +375,30 @@ export default {
       newDiv.style.zIndex = 999;
       newDiv.style.pointerEvents = 'none';
       container.appendChild(newDiv);
+      let insert = {
+        x: left+width-150,
+        y: (top+height),
+      }
+      this.insert = insert;
       // 遍历文本数组，找到目标文本
     },
     copy(){
 
+    },
+    // 清除选中框
+    clearSelection() {
+      let selection = document.getElementsByClassName('selection-boxd');
+
+      if (selection.length > 0) {
+          // 将 HTMLCollection 转换为数组
+          selection = Array.from(selection);
+
+          // 遍历数组并移除每个元素
+          selection.forEach(function(element) {
+              element.parentNode.removeChild(element);
+          });
+          this.insert = null;
+      }
     },
     handleMouseUp(event) {
       this.boxSelect()
@@ -402,12 +449,65 @@ export default {
         console.error('Error extracting text:', error);
       });
     },
+    transcript(){
 
+    },
+    bookmark(){
+      this.bookmarkList.push({x:this.bookmarkx,y:this.bookmarky});
+      // 去重
+      let uniqueData = Array.from(new Set(this.bookmarkList.map(JSON.stringify)));
+      this.insert = null;
+      this.clearSelection();
+    // 将字符串数组转换回对象数组
+    this.bookmarkList =  uniqueData.map(JSON.parse);
+      // this.bookmarkList = Array.from(new Set(this.bookmarkList));
+      console.log(uniqueData,this.bookmarkList,'书签列表');
+    },
+    scroller(e) {
+      let element = e.srcElement;
+      this.index = Math.floor(
+        (element.scrollTop + element.clientHeight) / (this.PdfHeight + 10)
+      );
+      // console.log('scroller')
+      if (this.dataArr.length > this.count.length) {
+        // 向下切换卷
+        if (
+          this.oldScroll < element.scrollTop &&
+          this.index >= this.count.length - 2
+        ) {
+          if (this.suoyin < this.pageArr.length - 1) {
+            this.suoyin++;
+            // console.log('----  向下切换卷   ----')
+            const l = [];
+            l.length = this.pageArr[this.suoyin].length;
+            this.count = [...this.count, ...l];
+            this.yeArr = [...this.yeArr, ...this.pageArr[this.suoyin]];
+          }
+        }
+        // 向上切换卷
+        if (this.oldScroll >= element.scrollTop && this.index <= 2) {
+          if (this.suoyin > 0) {
+            this.suoyin--;
+            // console.log('----  向上切换卷   ----')
+            const l = [];
+            l.length = this.pageArr[this.suoyin].length;
+            this.count = [...l, ...this.count];
+            this.yeArr = [...this.pageArr[this.suoyin], ...this.yeArr];
+            this.index = l.length + this.index;
+            this.$nextTick(() => {
+              element.scrollTop = this.index * (this.PdfHeight + 10);
+            });
+          }
+        }
+      }
+      this.oldScroll = element.scrollTop;
+      this.pdfRender(this);
+    },
   }
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 .contents {
   width: 100%;
   height:100%;
@@ -502,5 +602,39 @@ canvas {
 #text-overlay div span::selection{
   background: #C5E2FA;
   color: #000;
+}
+.insert{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 160px;
+  height: 40px;
+  background-color: #fff;
+  z-index: 999;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #000;
+  box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.1);
+  font-size: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  img{
+    width: 14px;
+    height: 14px;
+  }
+  .transcript,.bookmark{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .verticalLine{
+    height: 14px;
+    border-right: 1px solid #E6E6E6;
+  }
+}
+.bookmark-list{
+  position: absolute;
 }
 </style>

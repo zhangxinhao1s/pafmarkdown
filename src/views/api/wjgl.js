@@ -1,6 +1,5 @@
 import { get, post } from '@/network/request'
 // import { upload } from '@/network/http'
-import { upload } from "@/network/uploadUtil"
 const SERVE = '/szjz'
 const SERVE2 = '/fzba'
 const biz = '/base'
