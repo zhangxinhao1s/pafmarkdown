@@ -148,7 +148,6 @@ export default {
       },
       bookmarkx:'',
       bookmarky:'',
-      hoveredRowIndex: null,
     };
   },
   watch: {
@@ -407,48 +406,7 @@ export default {
     addchild(){
       console.log(this.ruleForm,'ruleform');
     },
-    extractTextFromSelection() {
-      if (!this.selectedArea) return;
-
-      const { x, y, width, height } = this.selectedArea;
-      const canvasContainer = this.$refs.canvasContainer;
-
-      // Convert coordinates to PDF viewport coordinates
-      const viewport = this.$refs.pdfCanvas.getBoundingClientRect();
-      const pdfViewport = this.pdfDocument.getPage(1).then(page => page.getViewport({ scale: this.scale }));
-
-      Promise.all([pdfViewport]).then(([pdfViewport]) => {
-        const pdfX = x * (pdfViewport.width / viewport.width);
-        const pdfY = y * (pdfViewport.height / viewport.height);
-        const pdfWidth = width * (pdfViewport.width / viewport.width);
-        const pdfHeight = height * (pdfViewport.height / viewport.height);
-
-        return this.pdfDocument.getPage(1).then(page => {
-          return page.getTextContent().then(textContent => {
-            const textItems = textContent.items;
-            const selectedTextItem = [];
-            for(let i=0;i<this.jsonObj.paragraph.length;i++){
-              var filteredItems = this.jsonObj.paragraph[i].char_location.filter(item => {
-                const itemX = (item.x*this.scale) * (pdfViewport.width / viewport.width);
-                const itemY = (item.y*this.scale) * (pdfViewport.height / viewport.height);
-                return (
-                  itemX >= pdfX &&
-                  itemX <= pdfX + pdfWidth &&
-                  itemY >= pdfY &&
-                  itemY <= pdfY + pdfHeight
-                );})
-                selectedTextItem.push(...filteredItems);
-            }
-            const selectedText = selectedTextItem.map(item => item.word).join('');
-            console.log(selectedText,'提取出来的文本');
-            // this.ruleForm.abstract = selectedText; // Example: Update abstract field
-            this.selectedArea = null;
-          });
-        });
-      }).catch(error => {
-        console.error('Error extracting text:', error);
-      });
-    },
+  
     transcript(){
 
     },
