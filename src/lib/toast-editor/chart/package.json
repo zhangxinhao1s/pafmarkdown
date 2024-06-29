@@ -1,0 +1,141 @@
+{
+  "_args": [
+    [
+      "@toast-ui/chart@4.6.1",
+      "C:\\Users\\Administrator\\Desktop\\jskj\\code\\fzba"
+    ]
+  ],
+  "_from": "@toast-ui/chart@4.6.1",
+  "_id": "@toast-ui/chart@4.6.1",
+  "_inBundle": false,
+  "_integrity": "sha512-F35IkHS0U9zqN6xIV1Yj3/wh8KGlZyzT3bwVGBJh/82DMDMn8rD2Us8X7xBMBGcZ3E15qkfnKjrATxU5ZoGAnA==",
+  "_location": "/@toast-ui/chart",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@toast-ui/chart@4.6.1",
+    "name": "@toast-ui/chart",
+    "escapedName": "@toast-ui%2fchart",
+    "scope": "@toast-ui",
+    "rawSpec": "4.6.1",
+    "saveSpec": null,
+    "fetchSpec": "4.6.1"
+  },
+  "_requiredBy": [
+    "/@toast-ui/editor-plugin-chart"
+  ],
+  "_resolved": "https://registry.npmmirror.com/@toast-ui/chart/-/chart-4.6.1.tgz",
+  "_spec": "4.6.1",
+  "_where": "C:\\Users\\Administrator\\Desktop\\jskj\\code\\fzba",
+  "author": {
+    "name": "NHN Cloud. FE Development Lab",
+    "email": "dl_javascript@nhn.com"
+  },
+  "bugs": {
+    "url": "https://github.com/nhn/tui.chart/issues"
+  },
+  "description": "TOAST UI Application: Chart",
+  "devDependencies": {},
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/toastui-chart.js"
+    },
+    "./line": {
+      "import": "./dist/esm/charts/lineChart.js"
+    },
+    "./area": {
+      "import": "./dist/esm/charts/areaChart.js"
+    },
+    "./lineArea": {
+      "import": "./dist/esm/charts/lineAreaChart.js"
+    },
+    "./bar": {
+      "import": "./dist/esm/charts/barChart.js"
+    },
+    "./column": {
+      "import": "./dist/esm/charts/columnChart.js"
+    },
+    "./columnLine": {
+      "import": "./dist/esm/charts/columnLineChart.js"
+    },
+    "./bullet": {
+      "import": "./dist/esm/charts/bulletChart.js"
+    },
+    "./boxPlot": {
+      "import": "./dist/esm/charts/boxPlotChart.js"
+    },
+    "./treemap": {
+      "import": "./dist/esm/charts/treemapChart.js"
+    },
+    "./heatmap": {
+      "import": "./dist/esm/charts/heatmapChart.js"
+    },
+    "./scatter": {
+      "import": "./dist/esm/charts/scatterChart.js"
+    },
+    "./lineScatter": {
+      "import": "./dist/esm/charts/lineScatterChart.js"
+    },
+    "./bubble": {
+      "import": "./dist/esm/charts/bubbleChart.js"
+    },
+    "./pie": {
+      "import": "./dist/esm/charts/pieChart.js"
+    },
+    "./nestedPie": {
+      "import": "./dist/esm/charts/nestedPieChart.js"
+    },
+    "./radar": {
+      "import": "./dist/esm/charts/radarChart.js"
+    },
+    "./radialBar": {
+      "import": "./dist/esm/charts/radialBarChart.js"
+    },
+    "./gauge": {
+      "import": "./dist/esm/charts/gaugeChart.js"
+    },
+    "./toastui-chart.css": "./dist/toastui-chart.css",
+    "./toastui-chart.min.css": "./dist/toastui-chart.min.css",
+    "./": "./"
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "homepage": "https://ui.toast.com",
+  "license": "MIT",
+  "main": "dist/toastui-chart.js",
+  "module": "dist/esm/",
+  "name": "@toast-ui/chart",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhn/tui.chart.git"
+  },
+  "scripts": {
+    "build": "npm run build:clean && npm run build:prod && npm run build:minify && npm run build:esm",
+    "build:clean": "rm -rf ./dist",
+    "build:esm": "ttsc -p tsconfig.esm.json",
+    "build:minify": "webpack --mode=production --env minify",
+    "build:prod": "webpack --mode=production",
+    "build:storybook": "build-storybook",
+    "check-types": "tsc --project ./tsconfig.json",
+    "doc": "npm run ts2js && tuidoc",
+    "doc:dev": "npm run build:prod && npm run ts2js && tuidoc --serv",
+    "lint": "eslint .",
+    "publish:cdn": "node scripts/publishToCDN.js",
+    "serve": "webpack serve --mode=development",
+    "storybook": "start-storybook -p 6006",
+    "test": "jest --detectOpenHandles --forceExit",
+    "test:ci": "npm run validate && jest",
+    "test:watch": "jest --watch",
+    "ts2js": "tsc --outDir tmpdoc --sourceMap false --target ES2015 --noEmit false",
+    "validate": "npm run check-types && npm run lint"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "types": "types/index.d.ts",
+  "version": "4.6.1"
+}

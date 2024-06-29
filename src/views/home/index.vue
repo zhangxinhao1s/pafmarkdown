@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { Decrypt, Encrypt } from "@/utils/urlEncrypt";
 import Main from "./components/main.vue";
 export default {
   components: {
@@ -86,6 +87,9 @@ export default {
      
     };
   },
+  created() {
+    this.getUserInfo();
+  },
   mounted() {
 
     
@@ -98,7 +102,42 @@ export default {
       if(val.type !== '2'){
         this.titileName = val;
       }
-    }
+    },
+    // 获取页面登陆信息
+    getUserInfo() {
+      let url = window.location.href;
+      let urlStr = url.substring(url.indexOf("?") + 1);
+      // console.log("url", urlStr);
+      // let index = urlStr.indexOf("#/");
+      // let testUrl = urlStr.substring(0, index);
+      // urlStr = testUrl;
+      // console.log("url1111", testUrl);
+      // console.log("地址栏参数", urlStr);
+      // 根据&符号生成数组，并且第一道 Decrypt 解码
+      let parameterArray = Decrypt(urlStr).split("&");
+      // console.log("第一次解密", parameterArray);
+      //创建对象接受地址栏信息
+      var requestParameters = new Object();
+      // 数组遍历生成对象，可以根据key值获取属性
+      for (var i = 0; i < parameterArray.length; i++) {
+        requestParameters[parameterArray[i].split("=")[0]] =
+          parameterArray[i].split("=")[1];
+      }
+      // console.log("requestParameters======>", requestParameters);
+      // console.log("111", decodeURIComponent(requestParameters.gnmc));
+      sessionStorage.setItem("dwbm", requestParameters.dwbm);
+      sessionStorage.setItem("gnbm", requestParameters.gnbm);
+      sessionStorage.setItem(
+        "gnmc",
+        decodeURIComponent(requestParameters.gnmc)
+      );
+      sessionStorage.setItem("rybm", requestParameters.rybm);
+      // console.log(
+      //   this.$store.state.user.userInfo,
+      //   this.searchForm,
+      //   "解密后数据"
+      // );
+    },
   },
 };
 </script>

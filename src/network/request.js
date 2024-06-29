@@ -132,14 +132,14 @@ export const post = (
   }
   let key = ""
   if (sessionStorage.getItem('rymc') && sessionStorage.getItem('dwmc')) {
-    let data = {
+    var data = {
       rymc: sessionStorage.getItem('rymc'),
       rybm: sessionStorage.getItem('rybm'),
       dwmc: sessionStorage.getItem('dwmc'),
       dwbm: sessionStorage.getItem('dwbm')
     }
-    key = encryptString(JSON.stringify(data))
   }
+    key = encryptString(JSON.stringify(data))
   let header = headers;
   if (type === 'json') {
     params = JSON.stringify(params);

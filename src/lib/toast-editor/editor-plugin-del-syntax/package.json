@@ -1,0 +1,86 @@
+{
+  "_args": [
+    [
+      "@toast-ui/editor-plugin-color-syntax@3.1.0",
+      "C:\\Users\\Administrator\\Desktop\\jskj\\测试demo\\zhjc-szjz-web"
+    ]
+  ],
+  "_from": "@toast-ui/editor-plugin-color-syntax@3.1.0",
+  "_id": "@toast-ui/editor-plugin-color-syntax@3.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-UVKfMBPV+3snSaJn9RUKGbxJbgi92D2t68ow8wAjGezvMp1ht4UVETrvomdTGr+RYhXSeH3JvSwN9nmQqw0qzA==",
+  "_location": "/@toast-ui/editor-plugin-del-syntax",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@toast-ui/editor-plugin-color-syntax@3.1.0",
+    "name": "@toast-ui/editor-plugin-color-syntax",
+    "escapedName": "@toast-ui%2feditor-plugin-color-syntax",
+    "scope": "@toast-ui",
+    "rawSpec": "3.1.0",
+    "saveSpec": null,
+    "fetchSpec": "3.1.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmmirror.com/@toast-ui/editor-plugin-color-syntax/-/editor-plugin-color-syntax-3.1.0.tgz",
+  "_spec": "3.1.0",
+  "_where": "C:\\Users\\Administrator\\Desktop\\jskj\\测试demo\\zhjc-szjz-web",
+  "author": {
+    "name": "NHN Cloud FE Development Lab",
+    "email": "dl_javascript@nhn.com"
+  },
+  "browserslist": "last 2 versions, not ie <= 10",
+  "bugs": {
+    "url": "https://github.com/nhn/tui.editor/issues"
+  },
+  "dependencies": {
+    "tui-color-picker": "^2.2.6"
+  },
+  "description": "TOAST UI Editor : Color Syntax Plugin",
+  "devDependencies": {
+    "cross-env": "^6.0.3"
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.css",
+    "types/index.d.ts"
+  ],
+  "homepage": "https://ui.toast.com",
+  "keywords": [
+    "nhn",
+    "nhn cloud",
+    "toast",
+    "toastui",
+    "toast-ui",
+    "editor",
+    "plugin",
+    "color-syntax",
+    "color-picker"
+  ],
+  "license": "MIT",
+  "main": "dist/toastui-editor-plugin-color-syntax.js",
+  "name": "@toast-ui/editor-plugin-color-syntax",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhn/tui.editor.git",
+    "directory": "plugins/color-syntax"
+  },
+  "scripts": {
+    "build": "webpack build && npm run build:cdn",
+    "build:cdn": "webpack build --env cdn & webpack build --env cdn minify",
+    "lint": "eslint .",
+    "serve": "snowpack dev",
+    "serve:ie": "webpack serve",
+    "test": "jest --watch",
+    "test:ci": "jest",
+    "test:types": "tsc"
+  },
+  "types": "types/index.d.ts",
+  "version": "3.1.0"
+}
